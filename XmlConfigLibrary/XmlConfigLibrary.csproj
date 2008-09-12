@@ -37,6 +37,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="BinaryParser.cs" />
     <Compile Include="DateTimeParser.cs" />
+    <Compile Include="EnumParser.cs" />
     <Compile Include="GuidParser.cs" />
     <Compile Include="IntParser.cs" />
     <Compile Include="IntRangeValidator.cs" />
