@@ -16,11 +16,15 @@ namespace XmlConfigLibrary
 
 		public bool TryParse (XmlConfigNode node, out T value)
 		{
+			if (node.NodeValue == null) {
+				value = default (T);
+				return false;
+			}
 			try {
 				value = (T)Enum.Parse (_type, node.NodeValue);
 				return true;
 			} catch {
-				value = (T)Enum.GetValues (_type).GetValue (0);
+				value = default (T);
 				return false;
 			}
 		}
