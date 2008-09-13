@@ -31,6 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -38,11 +40,15 @@
     <Compile Include="BinaryParser.cs" />
     <Compile Include="DateTimeParser.cs" />
     <Compile Include="EnumParser.cs" />
+    <Compile Include="FontParser.cs" />
     <Compile Include="GuidParser.cs" />
     <Compile Include="IntParser.cs" />
     <Compile Include="IntRangeValidator.cs" />
     <Compile Include="IParser.cs" />
     <Compile Include="IValidator.cs" />
+    <Compile Include="PointParser.cs" />
+    <Compile Include="RectangleParser.cs" />
+    <Compile Include="SizeParser.cs" />
     <Compile Include="StringParser.cs" />
     <Compile Include="TimeSpanParser.cs" />
     <Compile Include="XmlConfig.cs" />

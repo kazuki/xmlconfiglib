@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using XmlConfigLibrary;
+using System.Drawing;
 
 namespace Test
 {
@@ -18,6 +19,7 @@ namespace Test
 			config.Define<TimeSpan> ("type/timespan", TimeSpanParser.Instance, null, new TimeSpan (DateTime.Now.Ticks));
 			config.Define<Guid> ("type/guid", GuidParser.Instance, null, Guid.NewGuid ());
 			config.Define<TestEnum> ("type/enum", new EnumParser<TestEnum> (), null, TestEnum.hoge);
+			config.Define<Rectangle> ("type/rectangle", RectangleParser.Instance, null, Rectangle.Empty);
 
 #if true
 			config.SetValue<int> ("type/int", 1, false);
@@ -29,6 +31,7 @@ namespace Test
 			config.SetValue<TimeSpan> ("type/timespan", new TimeSpan (DateTime.Now.Ticks), false);
 			config.SetValue<Guid> ("type/guid", Guid.NewGuid (), false);
 			config.SetValue<TestEnum> ("type/enum", TestEnum.foo, false);
+			config.SetValue<Rectangle> ("type/rectangle", new Rectangle (10, 20, 30, 40), false);
 #endif
 
 			config.Save ("test2.xml");
