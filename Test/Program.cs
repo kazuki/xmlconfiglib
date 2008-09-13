@@ -20,6 +20,7 @@ namespace Test
 			config.Define<Guid> ("type/guid", GuidParser.Instance, null, Guid.NewGuid ());
 			config.Define<TestEnum> ("type/enum", new EnumParser<TestEnum> (), null, TestEnum.hoge);
 			config.Define<Rectangle> ("type/rectangle", RectangleParser.Instance, null, Rectangle.Empty);
+			config.Define<bool> ("type/bool", BooleanParser.Instance, null, false);
 
 #if true
 			config.SetValue<int> ("type/int", 1, false);
@@ -32,6 +33,7 @@ namespace Test
 			config.SetValue<Guid> ("type/guid", Guid.NewGuid (), false);
 			config.SetValue<TestEnum> ("type/enum", TestEnum.foo, false);
 			config.SetValue<Rectangle> ("type/rectangle", new Rectangle (10, 20, 30, 40), false);
+			config.SetValue<bool> ("type/bool", true, false);
 #endif
 
 			config.Save ("test2.xml");
