@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define FIRST_LOAD
+using System;
 using System.IO;
 using XmlConfigLibrary;
 using System.Drawing;
@@ -10,8 +11,10 @@ namespace Test
 		static void Main (string[] args)
 		{
 			XmlConfig config = new XmlConfig ();
+#if FIRST_LOAD
 			if (File.Exists ("test.xml"))
 				config.Load ("test.xml");
+#endif
 			config.Define<int> ("type/int", IntParser.Instance, new IntRangeValidator (-10, 10), 0);
 			config.Define<string> ("type/string", StringParser.Instance, null, "");
 			config.Define<byte[]> ("type/binary", BinaryParser.Instance, null, new byte[0]);
@@ -23,6 +26,10 @@ namespace Test
 			config.Define<bool> ("type/bool", BooleanParser.Instance, null, false);
 			config.Define<string[]> ("type/array/string", new ArrayParser<string> (StringParser.Instance), null, new string[0]);
 			config.Define<TestEnum[]> ("type/array/enum", new ArrayParser<TestEnum> (new EnumParser<TestEnum> (), "i"), null, new TestEnum[0]);
+#if !FIRST_LOAD
+			if (File.Exists ("test.xml"))
+				config.Load ("test.xml");
+#endif
 
 #if false
 			config.SetValue<int> ("type/int", 1, false);

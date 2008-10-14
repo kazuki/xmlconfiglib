@@ -9,6 +9,7 @@ namespace XmlConfigLibrary
 	{
 		public const string ConfigVersion = "1.0";
 		Dictionary<string, XmlConfigNode> _cache = new Dictionary<string, XmlConfigNode> ();
+		Dictionary<string, IDefineValue> _defines = new Dictionary<string, IDefineValue> ();
 
 		public XmlConfig () : base (null, "config")
 		{
@@ -24,11 +25,31 @@ namespace XmlConfigLibrary
 
 		public void Load (Stream strm)
 		{
-			using (XmlTextReader reader = new XmlTextReader (strm)) {
-				while (reader.Read ()) {
-					if (reader.IsStartElement () && reader.Name == "config") {
-						Load (reader.ReadSubtree ());
+			lock (_defines) {
+				Nodes.Clear ();
+				if (Attributes != null)
+					Attributes.Clear ();
+				_cache.Clear ();
+
+				using (XmlTextReader reader = new XmlTextReader (strm)) {
+					while (reader.Read ()) {
+						if (reader.IsStartElement () && reader.Name == "config") {
+							Load (reader.ReadSubtree ());
+						}
 					}
+				}
+
+				object[] invokeParams = new object[4];
+				foreach (KeyValuePair<string, IDefineValue> entry in _defines) {
+					XmlConfigNode node = Lookup (entry.Key, true);
+					Type tmp = typeof (XmlConfigNode<>);
+					tmp = tmp.MakeGenericType (entry.Value.GenericsType);
+					invokeParams[0] = node;
+					invokeParams[1] = entry.Value.ConstructorParams[0];
+					invokeParams[2] = entry.Value.ConstructorParams[1];
+					invokeParams[3] = entry.Value.ConstructorParams[2];
+					XmlConfigNode newNode = (XmlConfigNode)tmp.GetConstructors ()[0].Invoke (invokeParams);
+					_cache[entry.Key] = newNode;
 				}
 			}
 		}
@@ -80,7 +101,35 @@ namespace XmlConfigLibrary
 		{
 			XmlConfigNode node = Lookup (id, true);
 			XmlConfigNode<T> newNode = new XmlConfigNode<T> (node, parser, validator, defaultValue);
-			_cache[id] = newNode;
+			lock (_defines) {
+				_cache[id] = newNode;
+				_defines.Add (id, new DefineValue<T> (parser, validator, defaultValue));
+			}
+		}
+		#endregion
+
+		#region Internal Class
+		interface IDefineValue
+		{
+			Type GenericsType { get; }
+			object[] ConstructorParams { get; }
+		}
+		class DefineValue<T> : IDefineValue
+		{
+			object[] _params;
+
+			public DefineValue (IParser<T> parser, IValidator<T> validator, T defaultValue)
+			{
+				_params = new object[] {parser, validator, defaultValue};
+			}
+
+			public Type GenericsType {
+				get { return typeof (T); }
+			}
+
+			public object[] ConstructorParams {
+				get { return _params; }
+			}
 		}
 		#endregion
 	}
