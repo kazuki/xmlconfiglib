@@ -37,6 +37,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArrayParser.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="BinaryParser.cs" />
     <Compile Include="BooleanParser.cs" />

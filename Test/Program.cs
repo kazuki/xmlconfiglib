@@ -21,8 +21,10 @@ namespace Test
 			config.Define<TestEnum> ("type/enum", new EnumParser<TestEnum> (), null, TestEnum.hoge);
 			config.Define<Rectangle> ("type/rectangle", RectangleParser.Instance, null, Rectangle.Empty);
 			config.Define<bool> ("type/bool", BooleanParser.Instance, null, false);
+			config.Define<string[]> ("type/array/string", new ArrayParser<string> (StringParser.Instance), null, new string[0]);
+			config.Define<TestEnum[]> ("type/array/enum", new ArrayParser<TestEnum> (new EnumParser<TestEnum> (), "i"), null, new TestEnum[0]);
 
-#if true
+#if false
 			config.SetValue<int> ("type/int", 1, false);
 			config.SetValue<string> ("type/string", "hoge", false);
 			byte[] temp = new byte[32];
@@ -34,6 +36,8 @@ namespace Test
 			config.SetValue<TestEnum> ("type/enum", TestEnum.foo, false);
 			config.SetValue<Rectangle> ("type/rectangle", new Rectangle (10, 20, 30, 40), false);
 			config.SetValue<bool> ("type/bool", true, false);
+			config.SetValue<string[]> ("type/array/string", new string[]{"item0", "item1", "item2", "item3"}, false);
+			config.SetValue<TestEnum[]> ("type/array/enum", new TestEnum[]{TestEnum.hoge, TestEnum.piyo}, false);
 #endif
 
 			config.Save ("test2.xml");
