@@ -13,9 +13,12 @@ namespace XmlConfigLibrary
 
 		public bool TryParse (XmlConfigNode node, out string value)
 		{
-			value = node.NodeValue;
-			if (value == null)
+			if (node.NodeValue == null) {
 				value = string.Empty;
+				return false;
+			}
+
+			value = node.NodeValue;
 			return true;
 		}
 

@@ -13,9 +13,10 @@ namespace XmlConfigLibrary
 
 		public bool TryParse (XmlConfigNode node, out TimeSpan value)
 		{
-			value = TimeSpan.MinValue;
-			if (node.NodeValue == null)
+			if (node.NodeValue == null) {
+				value = TimeSpan.MinValue;
 				return false;
+			}
 			return TimeSpan.TryParse (node.NodeValue, out value);
 		}
 

@@ -13,8 +13,12 @@ namespace XmlConfigLibrary
 
 		public bool TryParse (XmlConfigNode node, out byte[] value)
 		{
-			if (node.NodeValue == null || node.NodeValue.Length == 0) {
+			if (node.NodeValue == null) {
 				value = null;
+				return false;
+			}
+			if (node.NodeValue.Length == 0) {
+				value = new byte[0];
 				return true;
 			}
 			try {

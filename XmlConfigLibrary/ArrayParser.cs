@@ -22,6 +22,11 @@ namespace XmlConfigLibrary
 
 		public bool TryParse (XmlConfigNode node, out T[] value)
 		{
+			if (node.NodeValue == null) {
+				value = null;
+				return false;
+			}
+
 			List<T> list = new List<T> ();
 			T tmp;
 			for (int i = 0; i < node.Nodes.Count; i ++) {

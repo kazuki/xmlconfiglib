@@ -56,6 +56,8 @@ namespace XmlConfigLibrary
 						break;
 				}
 			}
+			if (_nodeValue == null)
+				_nodeValue = string.Empty;
 		}
 
 		protected virtual void Write (XmlWriter writer)

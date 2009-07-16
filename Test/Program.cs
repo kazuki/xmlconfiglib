@@ -16,16 +16,16 @@ namespace Test
 				config.Load ("test.xml");
 #endif
 			config.Define<int> ("type/int", IntParser.Instance, new IntRangeValidator (-10, 10), 0);
-			config.Define<string> ("type/string", StringParser.Instance, null, "");
-			config.Define<byte[]> ("type/binary", BinaryParser.Instance, null, new byte[0]);
+			config.Define<string> ("type/string", StringParser.Instance, null, "default string");
+			config.Define<byte[]> ("type/binary", BinaryParser.Instance, null, new byte[]{0, 1, 2, 3, 4, 5});
 			config.Define<DateTime> ("type/datetime", DateTimeParser.Instance, null, DateTime.Now);
 			config.Define<TimeSpan> ("type/timespan", TimeSpanParser.Instance, null, new TimeSpan (DateTime.Now.Ticks));
 			config.Define<Guid> ("type/guid", GuidParser.Instance, null, Guid.NewGuid ());
 			config.Define<TestEnum> ("type/enum", new EnumParser<TestEnum> (), null, TestEnum.hoge);
 			config.Define<Rectangle> ("type/rectangle", RectangleParser.Instance, null, Rectangle.Empty);
 			config.Define<bool> ("type/bool", BooleanParser.Instance, null, false);
-			config.Define<string[]> ("type/array/string", new ArrayParser<string> (StringParser.Instance), null, new string[0]);
-			config.Define<TestEnum[]> ("type/array/enum", new ArrayParser<TestEnum> (new EnumParser<TestEnum> (), "i"), null, new TestEnum[0]);
+			config.Define<string[]> ("type/array/string", new ArrayParser<string> (StringParser.Instance), null, new string[] {"default0", "default1"});
+			config.Define<TestEnum[]> ("type/array/enum", new ArrayParser<TestEnum> (new EnumParser<TestEnum> (), "i"), null, new TestEnum[] {TestEnum.foo, TestEnum.bar});
 #if !FIRST_LOAD
 			if (File.Exists ("test.xml"))
 				config.Load ("test.xml");
