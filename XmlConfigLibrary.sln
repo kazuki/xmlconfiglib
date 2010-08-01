@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlConfigLibrary", "XmlConfigLibrary\XmlConfigLibrary.csproj", "{09DDD2D2-8810-4017-8C0A-FF7A5FED9235}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{139646CF-DEC3-4531-A8E9-8CA60618C3B5}"
